@@ -20,7 +20,7 @@ var storeWarehouse = new Store({
 Store.prototype.openClose = function(x){
     storeWarehouse.dayTime = x;
 }
-storeWarehouse.openClose(true);
+
 
 if(storeWarehouse.dayTime){
     Store.prototype.bubuyingBook = function(book,price){
@@ -28,10 +28,17 @@ if(storeWarehouse.dayTime){
         this.storeMoney -= price;
     }
     Store.prototype.sellBook = function(book){
-        console.log(this.storeMoney += storeWarehouse.warehouse[book]);
+        if(storeWarehouse.warehouse[book]){
         delete storeWarehouse.warehouse[book];
+        }else{
+            console.log('We Dont Have That Book');
+        }
     }
 };
+//storeWarehouse.bubuyingBook('book11',5);
+//storeWarehouse.sellBook('book1');
+//console.log(storeWarehouse);
+
 
 
 
