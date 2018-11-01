@@ -1,47 +1,70 @@
-function Store(warehouse,storeMoney,dayTime){
-this.warehouse = warehouse;
-this.storeMoney = storeMoney;
-this.dayTime = dayTime;
-}
-var storeWarehouse = new Store({
-    book1:5,
-    book2:7,
-    book3:8,
-    book4:9,
-    book5:12,
-    book6:6.20,
-    book7:12.90,
-    book8:11,
-    book9:2.60,
-    book10:3.80,
-
-},
-78.50,true);
-Store.prototype.openClose = function(x){
-    storeWarehouse.dayTime = x;
-}
-
-
-if(storeWarehouse.dayTime){
-    Store.prototype.bubuyingBook = function(book,price){
-        this.warehouse[book] = price;
-        this.storeMoney -= price;
-    }
-    Store.prototype.sellBook = function(book){
-        if(storeWarehouse.warehouse[book]){
-        delete storeWarehouse.warehouse[book];
+function Warehouse(){
+    var products = {};
+    this.addProduct = function(product,amount,price){
+        if(products[product]){
+            products[product]['amount'] +=amount;
         }else{
-            console.log('We Dont Have That Book');
+         products[product] = {
+             'amount':amount,
+             'price':price
+         }
         }
     }
-};
-//storeWarehouse.bubuyingBook('book11',5);
-//storeWarehouse.sellBook('book1');
-//console.log(storeWarehouse);
+    this.removeProduct = function(product,amount){
+     if(products[product]){
+         if(products[product]['amount']==amount){
+         delete products[product];
+     }else if(products[product]['amount']>amount){
+         products[product]['amount'] -=amount;
+     }else {
+         if(confirm('We have only '+products[product]['amount']+' '+product+ ' woudl you like To Buy?')){
+            delete products[product];
+         }
+     }
+    }else{
+        console.log('We dont have That product');
+    }
+    }
+    this.returnProducts = function(){
+        return products;
+    }
+}
+function Store(StoreOpen){
+    var budget = 100;
+    this.StoreOpen = StoreOpen;
+    this.sellProduct = function(product,amount){
+        if(this.StoreOpen){ 
+            warehouse.removeProduct(product,amount)
+        }else{
+            console.log('We Are Closed');
+        } 
+    }
+    this.buyingProduct = function(product,amount,price){
+       if(this.StoreOpen){
+           if(budget>= amount * price){
+               warehouse.addProduct(product,amount,price);
+               budget -= amount * price;
+           }else{
+               console.log('We Dont Have Enough Money');
+           }
+       }else{
+        console.log('We Are Closed');
+    }
+    }
+    this.returnBudget = function(){
+        return budget;
+    }
+}
 
 
 
 
+var warehouse = new Warehouse();
+var store = new Store(true);
+store.buyingProduct('book1',4,5);
+store.sellProduct('book1',3)
 
+console.log(warehouse.returnProducts());
+console.log( store.returnBudget());
 
 
