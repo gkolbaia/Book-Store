@@ -37,12 +37,13 @@ function Warehouse(){
     }
 }
 function Store(StoreOpen){
+    this.warehouse = new Warehouse();
     var budget = 100;
     this.StoreOpen = StoreOpen;
     this.sellProduct = function(product,amount){
         if(this.StoreOpen){   
-            warehouse.removeProduct(product,amount); 
-            budget += warehouse.returnMoney();
+            this.warehouse.removeProduct(product,amount); 
+            budget += this.warehouse.returnMoney();
         }else{
             console.log('We Are Closed');
         } 
@@ -50,7 +51,7 @@ function Store(StoreOpen){
     this.buyingProduct = function(product,amount,price){
        if(this.StoreOpen){
            if(budget>= amount * price){
-               warehouse.addProduct(product,amount,price);
+               this.warehouse.addProduct(product,amount,price);
                budget -= amount * price;
            }else{
                console.log('We Dont Have Enough Money');
@@ -63,11 +64,12 @@ function Store(StoreOpen){
         return budget;
     }
 }
-//var warehouse = new Warehouse();
-//var store = new Store(true);
-//store.buyingProduct('book1',4,5);
-//store.sellProduct('book1',4)
-//console.log(warehouse.returnProducts());
-//console.log(store.returnBudget());
+
+var store = new Store(true);
+store.buyingProduct('book1',4,5);
+store.buyingProduct('book2',4,5);
+store.sellProduct('book1',4)
+console.log(store.warehouse.returnProducts());
+console.log(store.returnBudget());
 
 
