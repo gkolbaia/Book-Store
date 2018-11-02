@@ -10,12 +10,8 @@ function Person(){
             personMoney-=this.inStore.warehouse.returnProducts()[product]['price'];
         }else{
             console.log('sorry you have no enough money')
-        }
-        
+        }   
     }
-
-
-
     this.personInOrOut = function(){
     if(this.personIn){
     this.inStore = new Store();
@@ -27,19 +23,6 @@ function Person(){
     }
 }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function Warehouse(){
     var products = {};
