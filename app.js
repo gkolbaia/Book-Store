@@ -1,3 +1,46 @@
+function Person(){
+    var personMoney = (Math.random() * Math.floor(10)).toFixed(2);
+    
+    this.enterStore = function(inOrOut){
+        this.personIn = inOrOut;
+    }
+    this.personBuying = function(product,amount){
+        if(personMoney>=this.inStore.warehouse.returnProducts()[product]['price']){
+            this.inStore.sellProduct(product,amount);
+            personMoney-=this.inStore.warehouse.returnProducts()[product]['price'];
+        }else{
+            console.log('sorry you have no enough money')
+        }
+        
+    }
+
+
+
+    this.personInOrOut = function(){
+    if(this.personIn){
+    this.inStore = new Store();
+
+    }else{
+        if(confirm('You are not in our store, would you like to come in?')){
+            this.inStore = new Store();
+        }else{console.log('BB')}
+    }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function Warehouse(){
     var products = {};
     var money;
@@ -36,10 +79,13 @@ function Warehouse(){
         return money;
     }
 }
-function Store(StoreOpen){
+function Store(){
     this.warehouse = new Warehouse();
     var budget = 100;
-    this.StoreOpen = StoreOpen;
+    this.StoreOpen = true;
+    this.openClose = function(openOrClose){
+        this.StoreOpen = openOrClose
+    }
     this.sellProduct = function(product,amount){
         if(this.StoreOpen){   
             this.warehouse.removeProduct(product,amount); 
@@ -64,12 +110,15 @@ function Store(StoreOpen){
         return budget;
     }
 }
+//var person1 = new Person();
+//person1.enterStore(true);
+//person1.personInOrOut();
 
-var store = new Store(true);
-store.buyingProduct('book1',4,5);
-store.buyingProduct('book2',4,5);
-store.sellProduct('book1',4)
-console.log(store.warehouse.returnProducts());
-console.log(store.returnBudget());
+//person1.inStore.buyingProduct('book1',4,5);
+//person1.inStore.buyingProduct('book2',4,5);
+//person1.personBuying('book1', 2);
+//console.log(person1.inStore.warehouse.returnProducts());
+//console.log(person1.inStore.returnBudget());
+
 
 
