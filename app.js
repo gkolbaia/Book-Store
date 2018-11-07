@@ -3,14 +3,15 @@ function Person(name) {
     var personMoney = (Math.random() * Math.floor(10)).toFixed(2);
     this.personIsIn = '';
     this.enterStore = function (groceryName) {
+        this.groceryName = groceryName;
         if (this.personIsIn != groceryName.name) {
-            if(groceryName.personPermission(this)){
-            this.personIsIn = groceryName.name;
-            }else{
+            if (groceryName.personPermission(this)) {
+                this.personIsIn = groceryName.name;
+            } else {
                 throw "you are not allowed"
             }
-            
-        }else{
+
+        } else {
             throw "you are already in store";
         }
     }
@@ -18,22 +19,18 @@ function Person(name) {
         if (this.personIsIn = groceryName.name) {
             this.personIsIn = '';
             groceryName.peopleAmountInStore -= this.name;
-        }else{
+        } else {
             throw "you are not in that store";
         }
     }
-    this.personBuying = function (groceryname,product, amount) {
-
-        if (this.personIsIn = groceryname.name) {
-            if (personMoney >= groceryname.warehouse.returnProducts()[product]['price']) {
-                groceryname.sellProduct(product, amount);
-                personMoney -= groceryname.warehouse.returnProducts()[product]['price'];
+    this.personBuying = function (product, amount) {
+            if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
+                this.groceryName.sellProduct(product, amount);
+                personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
             } else {
                 console.log('sorry you have no enough money')
             }
-        } else {
-            console.log('you are not in our store');
-        }
+        
     }
 }
 function Warehouse() {
@@ -85,10 +82,10 @@ function Store(name) {
         this.StoreOpen = openOrClose
     }
     this.sellProduct = function (product, amount) {
-
-        this.warehouse.removeProduct(product, amount);
-        budget += this.warehouse.returnMoney();
-
+        if (this.StoreOpen) {
+            this.warehouse.removeProduct(product, amount);
+            budget += this.warehouse.returnMoney();
+        }
     }
     this.buyingProduct = function (product, amount, price) {
         if (this.StoreOpen) {
@@ -118,14 +115,14 @@ function Store(name) {
 }
 
 
- var store1 = new Store('magazia');
- var person1 = new Person('irakli');
- store1.personPermission(person1);
- person1.enterStore(store1);
- store1.buyingProduct('book1', 4, 5);
- store1.buyingProduct('book2', 4, 5);
- person1.personBuying(store1,'book1', 2);
- console.log(store1.warehouse.returnProducts());
- console.log(store1.returnBudget());
- console.log(person1.personIsIn);
+var store1 = new Store('magazia');
+var person1 = new Person('irakli');
+store1.personPermission(person1);
+person1.enterStore(store1);
+store1.buyingProduct('book1', 4, 5);
+store1.buyingProduct('book2', 4, 5);
+person1.personBuying('book1', 2);
+console.log(store1.warehouse.returnProducts());
+console.log(store1.returnBudget());
+console.log(person1.personIsIn);
 
