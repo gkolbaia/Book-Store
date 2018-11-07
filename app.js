@@ -1,25 +1,21 @@
 function Person(name) {
     this.name = name;
     var personMoney = (Math.random() * Math.floor(10)).toFixed(2);
-    this.personIsIn = '';
+    this.groceryName = null;
     this.enterStore = function (groceryName) {
-        this.groceryName = groceryName;
-        if (this.personIsIn != groceryName.name) {
+
+        if (this.groceryName != null) {
+            throw 'you are already in store';
+        } else
             if (groceryName.personPermission(this)) {
-                this.personIsIn = groceryName.name;
-            } else {
-                throw "you are not allowed"
+                this.groceryName = groceryName;
             }
-        } else {
-            throw "you are already in store";
-        }
     }
     this.quitStore = function (groceryName) {
-        if (this.personIsIn = groceryName.name) {
-            this.personIsIn = '';
+
+        if (this.groceryName != null) {
+            this.groceryName = null;
             groceryName.peopleAmountInStore -= this.name;
-        } else {
-            throw "you are not in that store";
         }
     }
     this.personBuying = function (product, amount) {
@@ -29,7 +25,6 @@ function Person(name) {
         } else {
             console.log('sorry you have no enough money')
         }
-
     }
 }
 function Warehouse() {
@@ -114,14 +109,14 @@ function Store(name) {
 }
 
 
-var store1 = new Store('magazia');
-var person1 = new Person('irakli');
-store1.personPermission(person1);
-person1.enterStore(store1);
-store1.buyingProduct('book1', 4, 5);
-store1.buyingProduct('book2', 4, 5);
-person1.personBuying('book1', 2);
-console.log(store1.warehouse.returnProducts());
-console.log(store1.returnBudget());
-console.log(person1.personIsIn);
+// var store1 = new Store('magazia');
+// var person1 = new Person('irakli');
+// store1.personPermission(person1);
+// person1.enterStore(store1);
+// store1.buyingProduct('book1', 4, 5);
+// store1.buyingProduct('book2', 4, 5);
+// person1.personBuying('book1', 2);
+// console.log(store1.warehouse.returnProducts());
+// console.log(store1.returnBudget());
+
 
