@@ -10,7 +10,6 @@ function Person(name) {
             } else {
                 throw "you are not allowed"
             }
-
         } else {
             throw "you are already in store";
         }
@@ -24,13 +23,13 @@ function Person(name) {
         }
     }
     this.personBuying = function (product, amount) {
-            if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
-                this.groceryName.sellProduct(product, amount);
-                personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
-            } else {
-                console.log('sorry you have no enough money')
-            }
-        
+        if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
+            this.groceryName.sellProduct(product, amount);
+            personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
+        } else {
+            console.log('sorry you have no enough money')
+        }
+
     }
 }
 function Warehouse() {
