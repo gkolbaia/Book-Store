@@ -26,10 +26,11 @@ function Person(name) {
       }
     }
     this.personBuying = function (product, amount) {
-        if (chekBook(product)) {
+        if (this.chekBook(product)) {
             if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
-                this.groceryName.sellProduct(product, amount);
                 personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
+                this.groceryName.sellProduct(product, amount);
+                
             } else {
                 console.log('sorry you have no enough money')
             }
@@ -87,7 +88,6 @@ function Store() {
     }
     this.sellProduct = function (product, amount) {
         if (this.StoreOpen) {
-
             this.warehouse.removeProduct(product, amount);
             budget += this.warehouse.returnMoney();
         }
@@ -122,13 +122,13 @@ function Store() {
 
 var store1 = new Store();
 var person1 = new Person('irakli');
-var store2 = new Store();
-store2.personPermission(person1);
-person1.enterStore(store2);
-store2.buyingProduct('book1', 4, 5);
-store2.buyingProduct('book2', 4, 5);
-person1.personBuying('book', 2);
-console.log(store2.warehouse.returnProducts());
-console.log(store2.returnBudget());
+//var store2 = new Store();
+store1.personPermission(person1);
+person1.enterStore(store1);
+store1.buyingProduct('book1', 4, 1);
+store1.buyingProduct('book2', 4, 5);
+person1.personBuying('book1', 10 );
+console.log(store1.warehouse.returnProducts());
+console.log(store1.returnBudget());
 
 
