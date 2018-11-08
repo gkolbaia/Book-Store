@@ -18,12 +18,23 @@ function Person(name) {
             groceryName.peopleAmountInStore -= this.name;
         }
     }
+    this.chekBook = function (product) {
+      if(this.groceryName.warehouse.returnProducts()[product]){
+          return true;
+      }else{
+          return false;
+      }
+    }
     this.personBuying = function (product, amount) {
-        if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
-            this.groceryName.sellProduct(product, amount);
-            personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
+        if (chekBook(product)) {
+            if (personMoney >= this.groceryName.warehouse.returnProducts()[product]['price']) {
+                this.groceryName.sellProduct(product, amount);
+                personMoney -= this.groceryName.warehouse.returnProducts()[product]['price'];
+            } else {
+                console.log('sorry you have no enough money')
+            }
         } else {
-            console.log('sorry you have no enough money')
+            console.log('we dont have that book')
         }
     }
 }
@@ -65,8 +76,7 @@ function Warehouse() {
         return money;
     }
 }
-function Store(name) {
-    this.name = name;
+function Store() {
     this.warehouse = new Warehouse();
     var budget = 100;
     this.StoreOpen = true;
@@ -77,6 +87,7 @@ function Store(name) {
     }
     this.sellProduct = function (product, amount) {
         if (this.StoreOpen) {
+
             this.warehouse.removeProduct(product, amount);
             budget += this.warehouse.returnMoney();
         }
@@ -109,14 +120,15 @@ function Store(name) {
 }
 
 
-// var store1 = new Store('magazia');
-// var person1 = new Person('irakli');
-// store1.personPermission(person1);
-// person1.enterStore(store1);
-// store1.buyingProduct('book1', 4, 5);
-// store1.buyingProduct('book2', 4, 5);
-// person1.personBuying('book1', 2);
-// console.log(store1.warehouse.returnProducts());
-// console.log(store1.returnBudget());
+var store1 = new Store();
+var person1 = new Person('irakli');
+var store2 = new Store();
+store2.personPermission(person1);
+person1.enterStore(store2);
+store2.buyingProduct('book1', 4, 5);
+store2.buyingProduct('book2', 4, 5);
+person1.personBuying('book', 2);
+console.log(store2.warehouse.returnProducts());
+console.log(store2.returnBudget());
 
 
